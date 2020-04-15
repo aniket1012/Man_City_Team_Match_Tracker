@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Layout from './HOC/Layout'
 
 
 const Routes = (props) => {
@@ -7,7 +8,9 @@ const Routes = (props) => {
 
   return (
     <div>
-      Hello
+      <Layout>
+        Second Line
+      </Layout>
     </div>
   )
 }
