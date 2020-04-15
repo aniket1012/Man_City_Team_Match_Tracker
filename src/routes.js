@@ -1,6 +1,9 @@
 import React from 'react';
-
 import Layout from './HOC/Layout'
+// import { Switch } from '@material-ui/core';
+import {Switch, Route} from 'react-router-dom'
+
+import Home from './Components/home'
 
 
 const Routes = (props) => {
@@ -9,7 +12,9 @@ const Routes = (props) => {
   return (
     <div>
       <Layout>
-        Second Line
+        <Switch>
+          <Route exact component={Home} path='/'/>
+        </Switch>
       </Layout>
     </div>
   )
