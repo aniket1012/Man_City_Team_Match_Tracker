@@ -36,10 +36,43 @@ import Animate from 'react-move/Animate'
         </Animate>
     )
 
+
+    animateFirst = () => (
+        <Animate
+            show={true}
+            start={{
+                opacity: 0,
+                x: 503,
+                y: 450
+            }}
+            enter={{
+                opacity:[1],
+                x: [273],
+                y: [450],
+                timing:{duration:500, ease: easePolyOut}
+            }}
+        >
+            {({opacity, x, y}) => {
+                return (
+                    <div 
+                    className='featured_first'
+                    style={{
+                        opacity,
+                        transform: `translate(${x}px, ${y}px)`
+                    }}
+                    >
+                        League
+                    </div>
+                )
+            }}
+        </Animate>
+    )
+
     render() {
         return (
             <div className='featured_text'>
                 {this.animateNumber()}
+                {this.animateFirst()}
             </div>
         )
     }
