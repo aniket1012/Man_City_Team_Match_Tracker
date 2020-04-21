@@ -15,7 +15,16 @@ const MatchesHome = () => {
 
                 BLOCK
 
-                TAG
+                <Tag
+                    bck="#ffffff"
+                    size='22px'
+                    color = '#0e1731'
+                    link={true}
+                    linkto="/the_team"
+                >
+                    see more matches
+                </Tag>
+
 
             </div>
         </div>
