@@ -24,14 +24,22 @@ const AdminNav = () => {
         
     ]
 
+    const style = {
+        color: '#ffffff',
+        fontWeight: 300,
+        borderBottom: '1px solid #353535'
+    }
 
-    const renderItems = () => {
+
+    const renderItems = () => (
         links.map((link) => (
             <Link to={link.linkTo} key={link.title}>
-            
+                <ListItem button style={style}>
+                    {link.title}
+                </ListItem>
             </Link>
         ))
-    }
+    )
 
 
     return (
