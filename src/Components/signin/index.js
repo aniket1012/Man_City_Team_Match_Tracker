@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import FormField from '../ui/formFields'
 import { validate } from '../ui/misc'
+import { firebase } from '../../firebase'
 
 class SignIn extends Component {
 
@@ -41,8 +42,53 @@ class SignIn extends Component {
         }
     }
 
+    updateForm(element) {
+        const newFormdata = {... this.state.formData} 
+        const newElement = {...newFormdata[element.id]}
 
-    submitForm() {
+        newElement.value = element.event.target.value 
+        newFormdata[element.id] = newElement
+        
+        let valiData = validate(newElement)
+
+        newElement.valid = valiData[0]
+        newElement.validationMessage = valiData[1]
+
+        this.setState({
+            formError: false,
+            formData: newFormdata
+        })
+    }
+
+
+    submitForm(event) {
+        event.preventDefault()
+
+        let dataToSubmit = {
+
+        }
+        let formIsValid = true 
+
+        for(let key in this.state.formData) {
+            dataToSubmit[key] = this.state.formData[key].value
+            formIsValid = this.state.formData[key].valid && formIsValid
+        }
+
+        if(formIsValid) {
+            firebase.auth()
+            .signInWithEmailAndPassword(
+                dataToSubmit.email,
+                dataToSubmit.password
+            ).then( () => {
+
+            }).catch(error => {
+                this.setState({
+                    formError: true 
+                })
+            })
+        } else {
+            
+        }
 
     }
 
@@ -55,6 +101,20 @@ class SignIn extends Component {
                     <form onSubmit={(event) => this.submitForm()}>
 
                         <h2>Please Login</h2>
+
+                        <FormField
+                            id={'email'}
+                            formdata={this.state.formData.email}
+                            change={(element) => this.updateForm(element)}
+                            />
+                        <FormField
+                            id={'password'}
+                            formdata={this.state.formData.password}
+                            change={(element) => this.updateForm(element)}
+                            />
+                            {this.state.formError ? <div className='error_label'>Something is wrong, try again.</div> : null}
+
+                            <button onClick={(event) => this.submitForm(event)}>Login</button>
 
                     </form>
                </div>
