@@ -80,7 +80,7 @@ class SignIn extends Component {
                 dataToSubmit.email,
                 dataToSubmit.password
             ).then( () => {
-
+                this.props.history.push('/dashboard')
             }).catch(error => {
                 this.setState({
                     formError: true 
