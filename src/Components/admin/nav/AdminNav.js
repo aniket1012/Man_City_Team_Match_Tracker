@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import ListItem from '@material-ui/core/ListItem'
+import {firebase} from '../../../firebase'
 
 const AdminNav = () => {
 
@@ -41,10 +42,20 @@ const AdminNav = () => {
         ))
     )
 
+    const logoutHandler = () => {
+        firebase.auth().signOut().then(() => {
+
+        }, () => {
+
+        })
+    }
 
     return (
         <div>
             {renderItems()}
+            <ListItem button style={style} onClick={() => logoutHandler()}>
+                Log Out 
+            </ListItem>
         </div>
     );
 };

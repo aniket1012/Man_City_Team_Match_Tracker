@@ -30,7 +30,7 @@ class Enroll extends Component {
     }
 
     updateForm(element) {
-        const newFormdata = {... this.state.formData} 
+        const newFormdata = {...this.state.formData} 
         const newElement = {...newFormdata[element.id]}
 
         newElement.value = element.event.target.value 
@@ -48,7 +48,7 @@ class Enroll extends Component {
     }
 
     resetFormSuccess(type) {
-        const newFormdata = {... this.state.formData} 
+        const newFormdata = {...this.state.formData} 
 
         for(let key in newFormdata){
             newFormdata[key].value = ''

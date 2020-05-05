@@ -3,10 +3,14 @@ import Layout from './HOC/Layout'
 // import { Switch } from '@material-ui/core';
 import {Switch, Route} from 'react-router-dom'
 
-import SignIn from './Components/signin'
+import PrivateRoute from './Components/authRoutes/privateRoutes'
+import PublicRoute from './Components/authRoutes/publicRoutes'
+
 import Home from './Components/home'
+import SignIn from './Components/signin'
 
 import Dashboard from './Components/admin/Dashboard'
+
 
 const Routes = (props) => {
 
@@ -15,9 +19,11 @@ const Routes = (props) => {
     <div>
       <Layout>
         <Switch>
-          <Route exact component={Dashboard} path='/dashboard'/>
-          <Route exact component={SignIn} path='/sign_in'/>
-          <Route exact component={Home} path='/'/>
+
+          <PrivateRoute {...props} path='/dashboard' exact component={Dashboard}/>
+          <PublicRoute {...props} restricted={true} path='/sign_in' exact component={SignIn}/>
+          <PublicRoute {...props} restricted={false} path='/' exact component={Home}/>
+         
         </Switch>
       </Layout>
     </div>
