@@ -13,6 +13,39 @@ class Fileuploader extends Component {
 
     }
 
+    
+    
+    handleUploadStart = () => {
+        this.setState({
+            isUploading: true
+        })
+    }
+    
+    handleUploadError = () => {
+        this.setState({
+            isUploading: false
+        })
+    }
+    
+    handleUploadSuccess = (filename) => {
+        this.setState({
+            name: filename,
+            isUploading: false
+        })
+        
+        firebase.storage().ref(this.props.dir)
+        .child(filename).getDownloadURL()
+        .then(url => {
+            this.setState({
+                fileURL: url
+            })
+        })
+        
+        this.props.filename(filename)
+        
+    }
+    
+    
     static getDerivedStateFromProps(props, state) {
         if(props.defaultImg) {
             return state = {
@@ -23,21 +56,15 @@ class Fileuploader extends Component {
         return null
     }
 
-
-    handleUploadStart = () => {
+    uploadAgain = () => {
         this.setState({
-            isUploading: true
+            name: '',
+            isUploading: false,
+            fileURL: '',
         })
+        this.props.resetImage()
     }
-
-    handleUploadError = () => {
-        this.setState({
-            isUploading: false
-        })
-    }
-
-
-
+    
     render() {
         return (
             <div>
@@ -67,10 +94,23 @@ class Fileuploader extends Component {
                 null
 
                 }
+                {this.state.fileURL ?
+                <div className='image_upload_container'>
+                    <img
+                        style={{
+                            width: '100%'
+                        }}
+                        src={this.state.fileURL}
+                        alt={this.state.name}
+                    />
+                    <div className='remove' onClick={()=> this.uploadAgain()}>
 
+                    </div>
 
-
-
+                </div>
+                : 
+                null
+                }
             </div>
         );
     }

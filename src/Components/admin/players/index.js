@@ -67,7 +67,7 @@ class AdminPlayers extends Component {
                                                  {player.number}
                                             </TableCell>
                                             <TableCell>
-                                                {player.postion}
+                                                {player.position}
                                             </TableCell>  
                                         </TableRow>
                                     ))

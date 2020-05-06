@@ -90,7 +90,7 @@ class AddEditPlayers extends Component {
                 validation: {
                     required: true,
                 },
-                valid: true
+                valid: false
             }
         }
     }
@@ -107,18 +107,25 @@ class AddEditPlayers extends Component {
         }
     }
 
-    updateForm(element) {
+    updateForm(element, content = '') {
         const newFormdata = {...this.state.formData} 
         const newElement = {...newFormdata[element.id]}
 
-        newElement.value = element.event.target.value 
-        newFormdata[element.id] = newElement
+        if(content === ''){
+            newElement.value = element.event.target.value 
+
+        } else {
+            newElement.value = content
+        }
+
         
         let valiData = validate(newElement)
-
         newElement.valid = valiData[0]
         newElement.validationMessage = valiData[1]
-
+        
+        
+        newFormdata[element.id] = newElement
+        
         this.setState({
             formError: false,
             formData: newFormdata
@@ -138,7 +145,17 @@ class AddEditPlayers extends Component {
         }
 
         if(formIsValid) {
-            // submit form
+            if(this.state.formType === "Edit player"){
+
+            } else {
+                firebasePlayers.push(dataToSubmit).then(()=> {
+                    this.props.history.push('/admin_players')
+                }).catch(e => {
+                    this.setState({
+                        formError: true
+                    })
+                })
+            }
         } else {
             this.setState({
                 formError: true 
@@ -148,11 +165,17 @@ class AddEditPlayers extends Component {
     }
 
     resetImage = () => {
-
+        const newFormdata = {...this.state.formData}
+        newFormdata['image'].value = ''
+        newFormdata['image'].valid = false
+        this.setState({
+            defaultImg: '',
+            formData: newFormdata
+        })
     }
 
-    storeFilename = () => {
-        
+    storeFilename = (filename) => {
+        this.updateForm({id: 'image'}, filename)
     }
 
     render() {
