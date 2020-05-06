@@ -228,12 +228,75 @@ class AddEditMatch extends Component {
         }
 
         if(!matchId) {
-
+            getTeams(false, 'Add Match')
         } else {
             firebaseDB.ref(`matches/${matchId}`).once('value')
             .then((snapshot) => {
                 const match = snapshot.val()
                 getTeams(match, 'Edit Match')
+            })
+        }
+
+    }
+
+    successForm(message){
+        this.setState({
+            formSuccess: message
+        })
+
+        setTimeout(()=> {
+            this.setState({
+                formSuccess: ''
+            })
+        }, 2000)
+    }
+
+    submitForm(event) {
+        event.preventDefault()
+
+        let dataToSubmit = {}
+        let formIsValid = true 
+
+        for(let key in this.state.formData) {
+            dataToSubmit[key] = this.state.formData[key].value
+            formIsValid = this.state.formData[key].valid && formIsValid
+        }
+
+        this.state.teams.forEach((team)=> {
+            if(team.shortName === dataToSubmit.local){
+                dataToSubmit['localThmb'] = team.thmb
+            }
+            if(team.shortName === dataToSubmit.away){
+                dataToSubmit['awayThmb'] = team.thmb
+            }
+        })
+
+        if(formIsValid) {
+            if(this.state.formType === 'Edit Match'){
+                firebaseDB.ref(`matches/${this.state.matchId}`)
+                .update(dataToSubmit).then((snapshot)=>{
+                    this.successForm('Updated correctly')
+                }).catch((e)=>{
+                    this.setState({
+                        formError: true
+                    })
+                })
+            } else {
+                firebaseMatches.push(dataToSubmit).then(()=> {
+                    this.props.history.push('/admin_matches')
+                }).catch((e)=> {
+                    this.setState({
+                        formError: true
+                    })
+                })
+
+
+            }
+
+
+        } else {
+            this.setState({
+                formError: true 
             })
         }
 

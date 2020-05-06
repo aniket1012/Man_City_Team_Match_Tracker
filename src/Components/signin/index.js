@@ -87,7 +87,9 @@ class SignIn extends Component {
                 })
             })
         } else {
-            
+            this.setState({
+                formError: true
+            })
         }
 
     }
