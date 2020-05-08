@@ -46,36 +46,63 @@ class TheTeam extends Component {
         })
     }
 
-    showPlayersByCategory = (category) => (
-        this.state.players ? 
-        this.state.players.map((player, i)=> {
-            return player.position === category ? 
-            <Fade left key={i}>
-                <div className='item'>
-                    <PlayerCard
-                        number={player.number}
-                        name={player.name}
-                        lastname={player.lastname}
-                        bck={player.url}
-                        />
-                </div>
-            </Fade>
-            :
-            null
-        })
-        :
-        null
+    showplayersByCategory = (category) => (
+        this.state.players ?
+            this.state.players.map((player,i)=>{
+                return player.position === category ?
+                    <Fade left delay={i*20} key={i}>
+                        <div className="item">
+                            <PlayerCard
+                                number={player.number}
+                                name={player.name}
+                                lastname={player.lastname}
+                                bck={player.url}
+                            />
+                        </div>
+                    </Fade>
+                :null
+            })
+        :null
     )
 
     render() {
         return (
-            <div className='the_team_container' style={{background: `url(${Stripes}) repeat`}}>
-                {this.state.loading ? 
+            <div className="the_team_container" 
+                style={{
+                    background: `url(${Stripes}) repeat`
+                }}
+            >
+                {!this.state.loading ? 
                 <div>
+
                     <div className='team_category_wrapper'>
-                        <div className='title'>Keepers</div>
-                        <div className='team_cards'>
-                            {this.showPlayersByCategory('Keeper')}
+                        <div className="team_category_wrapper">
+                            <div className="title">Keepers</div>
+                            <div className="team_cards">
+                                {this.showplayersByCategory('Keeper')}
+                            </div>
+                        </div>
+
+                        <div className="team_category_wrapper">
+                            <div className="title">Defence</div>
+                            <div className="team_cards">
+                                {this.showplayersByCategory('Defence')}
+                            </div>
+                        </div>
+
+                        <div className="team_category_wrapper">
+                            <div className="title">MidField</div>
+                            <div className="team_cards">
+                                {this.showplayersByCategory('Midfield')}
+                            </div>
+                        </div>
+
+                        <div className="team_category_wrapper">
+                            <div className="title">Striker</div>
+                            <div className="team_cards">
+                                {this.showplayersByCategory('Striker')}
+                            </div>
+
                         </div>
                     </div>
 
@@ -89,3 +116,4 @@ class TheTeam extends Component {
 }
 
 export default TheTeam;
+
