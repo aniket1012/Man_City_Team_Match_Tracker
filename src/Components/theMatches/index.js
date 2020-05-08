@@ -93,13 +93,13 @@ class TheMatches extends Component {
                                     <div className={`option ${state.resultFilter === 'All'?'active':''}`} onClick={()=>this.showResult('All')}>
                                         All
                                     </div>
-                                    <div className={`option ${state.resultFilter === 'Yes'?'active':''}`}onClick={()=>this.showResult('W')}>
+                                    <div className={`option ${state.resultFilter === 'W'?'active':''}`}onClick={()=>this.showResult('W')}>
                                         W
                                     </div>
-                                    <div className={`option ${state.resultFilter === 'No'?'active':''}`}onClick={()=>this.showResult('L')}>
+                                    <div className={`option ${state.resultFilter === 'L'?'active':''}`}onClick={()=>this.showResult('L')}>
                                         L
                                     </div>
-                                    <div className={`option ${state.resultFilter === 'No'?'active':''}`}onClick={()=>this.showResult('D')}>
+                                    <div className={`option ${state.resultFilter === 'D'?'active':''}`}onClick={()=>this.showResult('D')}>
                                         D
                                     </div>
                                 </div>
