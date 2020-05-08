@@ -25,12 +25,14 @@ class TheMatches extends Component {
             this.setState({
                 loading: false,
                 matches: reverseArray(matches),
-                filteredMatches: reverseArray(matches)
+                filterMatches: reverseArray(matches)
             })
         })
     }
 
     render() {
+      
+        
 
         const state = this.state
         
